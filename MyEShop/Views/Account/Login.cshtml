@@ -1,0 +1,314 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "ورود به فروشگاه زی";
+}
+
+<!-- Start Login Page -->
+<div class="login-page">
+    <!-- ذرات پس‌زمینه -->
+    <div class="particles">
+        <span style="--i:11;--x:10%;--y:20%;--s:6s;--d:12s;"></span>
+        <span style="--i:12;--x:20%;--y:80%;--s:8s;--d:10s;"></span>
+        <span style="--i:13;--x:30%;--y:50%;--s:4s;--d:14s;"></span>
+        <span style="--i:14;--x:40%;--y:10%;--s:7s;--d:11s;"></span>
+        <span style="--i:15;--x:50%;--y:90%;--s:5s;--d:13s;"></span>
+        <span style="--i:16;--x:60%;--y:30%;--s:9s;--d:9s;"></span>
+        <span style="--i:17;--x:70%;--y:70%;--s:3s;--d:15s;"></span>
+        <span style="--i:18;--x:80%;--y:40%;--s:6s;--d:12s;"></span>
+        <span style="--i:19;--x:90%;--y:60%;--s:8s;--d:10s;"></span>
+        <span style="--i:20;--x:15%;--y:85%;--s:4s;--d:14s;"></span>
+    </div>
+
+    <div class="container h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-md-6 col-lg-5">
+                <!-- آیکن کاربر چرخان با پالس -->
+                <div class="text-center mb-4">
+                    <div class="user-icon-wrapper">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+
+                <!-- کارت سه‌بعدی -->
+                <div class="card login-card border-0 shadow rounded-4 overflow-hidden">
+                    <div class="card-header bg-success text-white text-center py-4 border-0">
+                        <h3 class="fw-bold mb-1 typing-effect">ورود به حساب کاربری</h3>
+                        <p class="small opacity-75 mb-0">جهت ادامه وارد شوید</p>
+                    </div>
+
+                    <div class="card-body p-4 p-lg-5">
+                        <form asp-controller="Account" asp-action="Login" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                            <!-- نام کاربری با افکت تایپ -->
+                            <div class="mb-4 field-reveal" style="--i:1;">
+                                <label asp-for="UserName" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-success">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <input asp-for="UserName" class="form-control border-start-0 ps-0" placeholder="نام کاربری">
+                                </div>
+                                <span asp-validation-for="UserName" class="text-danger small"></span>
+                            </div>
+
+                            <!-- رمز عبور -->
+                            <div class="mb-4 field-reveal" style="--i:2;">
+                                <label asp-for="Password" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-success">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                    <input asp-for="Password" class="form-control border-start-0 ps-0" placeholder="••••••••">
+                                    <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+
+                            <!-- چک‌باکس Remember me (اصلاح‌شده) -->
+                            <div class="mb-4 field-reveal" style="--i:3;">
+                                <div class="form-check form-check-rtl">
+                                    <input asp-for="ReMemberMe" class="form-check-input" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label" for="rememberMe">
+                                        @Html.DisplayNameFor(m => m.ReMemberMe)
+                                    </label>
+                                </div>
+                                <div class="text-start mt-1">
+                                    <a href="#" class="text-success text-decoration-none small fw-bold">فراموشی رمز عبور؟</a>
+                                </div>
+                            </div>
+
+                            <!-- دکمه ورود با ripple -->
+                            <div class="d-grid mb-3 field-reveal" style="--i:4;">
+                                <button type="submit" class="btn btn-success btn-lg rounded-3 py-3 fw-bold ripple-btn">
+                                    <span><i class="fas fa-sign-in-alt me-2"></i> ورود</span>
+                                </button>
+                            </div>
+
+                            <p class="text-center mb-0 field-reveal" style="--i:5;">
+                                حساب کاربری ندارید؟
+                                <a asp-controller="Account" asp-action="Register" class="text-success fw-bold">ثبت‌نام کنید</a>
+                            </p>
+                        </form>
+                    </div>
+
+                    <!-- فوتر شبکه‌های اجتماعی حذف شد -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Login Page -->
+
+<style>
+    /* === پس‌زمینه و ذرات === */
+    .login-page {
+        min-height: 100vh;
+        position: relative;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9f5e9 100%);
+        overflow: hidden;
+    }
+
+    .particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+
+        .particles span {
+            position: absolute;
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: #198754;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatParticle var(--d) linear infinite;
+            animation-delay: var(--s);
+            left: var(--x);
+            top: var(--y);
+            box-shadow: 0 0 10px #198754, 0 0 20px #198754;
+        }
+
+    @@keyframes floatParticle {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 0.3;
+        }
+
+        50% {
+            transform: translateY(-100px) scale(1.8);
+            opacity: 0.1;
+        }
+
+        100% {
+            transform: translateY(-200px) scale(1);
+            opacity: 0;
+        }
+    }
+
+    /* === آیکن کاربر === */
+    .user-icon-wrapper {
+        display: inline-block;
+        font-size: 5rem;
+        color: #198754;
+        animation: iconPulse 2s ease-in-out infinite, rotateSlow 20s linear infinite;
+        filter: drop-shadow(0 10px 15px rgba(25,135,84,0.2));
+    }
+
+    @@keyframes iconPulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
+    @@keyframes rotateSlow {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* === کارت سه‌بعدی === */
+    .login-card {
+        animation: cardEntry 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards, shadowBreath 5s ease-in-out infinite;
+        transform-origin: center;
+        transition: transform 0.3s;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    @@keyframes cardEntry {
+        from {
+            opacity: 0;
+            transform: translateY(50px) rotateX(15deg) scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) rotateX(0) scale(1);
+        }
+    }
+
+    @@keyframes shadowBreath {
+        0%, 100% {
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        50% {
+            box-shadow: 0 35px 70px rgba(0,0,0,0.25);
+        }
+    }
+
+    /* === تایپ افکت برای عنوان === */
+    .typing-effect {
+        overflow: hidden;
+        white-space: nowrap;
+        margin: 0 auto;
+        animation: typing 1.5s steps(20) 0.5s forwards;
+        width: 0;
+    }
+
+    @@keyframes typing {
+        from {
+            width: 0;
+        }
+
+        to {
+            width: 100%;
+        }
+    }
+
+    /* === فیلدها یکی‌یکی از چپ (RTL) وارد می‌شن === */
+    .field-reveal {
+        opacity: 0;
+        transform: translateX(30px);
+        animation: revealField 0.6s ease forwards;
+        animation-delay: calc(0.2s * var(--i));
+    }
+
+    @@keyframes revealField {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* === چک‌باکس اصلاح‌شده RTL === */
+    .form-check-rtl {
+        padding-right: 1.8em; /* فضای کافی برای چک‌باکس */
+        padding-left: 0;
+        text-align: right;
+    }
+
+        .form-check-rtl .form-check-input {
+            float: right;
+            margin-right: -1.8em; /* برگرداندن به جای درست */
+            margin-left: 0;
+        }
+
+        .form-check-rtl .form-check-label {
+            padding-right: 0.5em;
+            display: inline-block;
+        }
+
+    /* === دکمه ripple === */
+    .ripple-btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s;
+        background: linear-gradient(45deg, #198754, #28a745);
+        border: none;
+        box-shadow: 0 5px 15px rgba(25,135,84,0.3);
+    }
+
+        .ripple-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(25,135,84,0.5);
+        }
+
+        .ripple-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+    /* === Responsive === */
+    @@media (max-width: 576px) {
+        .user-icon-wrapper {
+            font-size: 3rem;
+        }
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // toggle password
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('Password');
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+    </script>
+}

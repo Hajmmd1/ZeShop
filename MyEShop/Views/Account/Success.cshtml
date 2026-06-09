@@ -1,0 +1,84 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "ثبت‌نام موفق";
+}
+
+<section class="bg-light d-flex align-items-center" style="min-height: 80vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <!-- کارت با انیمیشن ورود -->
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden text-center" style="animation: slideUp 0.6s ease-out;">
+                    <div class="card-body p-5">
+                        <!-- دایره بزرگ با تیک SVG -->
+                        <div class="mb-4 d-flex justify-content-center">
+                            <div class="check-circle" style="animation: scaleIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.3s both;">
+                                <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+                                    <!-- دایره پس‌زمینه (اختیاری) -->
+                                    <circle cx="26" cy="26" r="24" fill="#198754" />
+                                    <!-- تیک متحرک -->
+                                    <path class="checkmark" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14 27 l7 7 l16-16" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <h2 class="fw-bold mb-3" style="animation: fadeInUp 0.6s 0.6s both;">تبریک!</h2>
+                        <p class="text-muted mb-4" style="animation: fadeInUp 0.6s 0.8s both;">
+                            ثبت‌نام شما با موفقیت انجام شد.<br>
+                            اکنون می‌توانید وارد حساب کاربری خود شوید.
+                        </p>
+                        <div style="animation: fadeInUp 0.6s 1s both;">
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-success btn-lg rounded-3 px-5 fw-bold shadow-sm">
+                                <i class="fas fa-sign-in-alt me-2"></i> رفتن به صفحه ورود
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* انیمیشن‌ها */
+    @@keyframes slideUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @@keyframes scaleIn {
+        0% { transform: scale(0); opacity: 0; }
+        60% { transform: scale(1.15); opacity: 1; }
+        100% { transform: scale(1); }
+    }
+
+    /* انیمیشن کشیدن تیک */
+    .checkmark {
+        stroke-dasharray: 50;
+        stroke-dashoffset: 50;
+        animation: draw 0.6s ease forwards 0.8s;
+    }
+
+    @@keyframes draw {
+        to { stroke-dashoffset: 0; }
+    }
+
+    /* پالس ملایم بعد از ظاهر شدن */
+    .check-circle {
+        display: inline-flex;
+        animation: scaleIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.3s both,
+                   pulse 2s ease 1.2s infinite;
+    }
+
+    @@keyframes pulse {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.4); }
+        70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(25, 135, 84, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(25, 135, 84, 0); }
+    }
+</style>

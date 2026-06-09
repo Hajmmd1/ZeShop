@@ -1,0 +1,144 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "عضویت در فروشگاه زی";
+}
+
+<!-- Start Register Section -->
+<section class="bg-light py-5" style="min-height: 80vh; display: flex; align-items: center;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <!-- کارت ثبت‌نام -->
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <!-- هدر سبز -->
+                    <div class="card-header bg-success text-white text-center py-4 border-0">
+                        <h3 class="fw-bold mb-1">عضویت در فروشگاه زی</h3>
+                        <p class="small opacity-75 mb-0">یک حساب کاربری رایگان بسازید</p>
+                    </div>
+
+                    <!-- بدنه فرم -->
+                    <div class="card-body p-4 p-lg-5">
+                        <form asp-action="Register" method="post">
+                            <!-- نمایش خطاهای سراسری (در صورت نیاز) -->
+                            <div asp-validation-summary="ModelOnly" class="text-danger small mb-3"></div>
+
+                            <!-- فیلد نام کاربری -->
+                            <div class="mb-4">
+                                <label asp-for="UserName" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-success">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                    <input asp-for="UserName" class="form-control border-start-0 ps-0" placeholder="نام کاربری خود را وارد کنید">
+                                </div>
+                                <span asp-validation-for="UserName" class="text-danger small d-block mt-1"></span>
+                            </div>
+
+                            <!-- فیلد رمز عبور -->
+                            <div class="mb-4">
+                                <label asp-for="Password" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-success">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                    <input asp-for="Password" class="form-control border-start-0 ps-0" placeholder="حداقل ۶ کاراکتر">
+                                    <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger small d-block mt-1"></span>
+                            </div>
+
+                            <!-- فیلد تکرار رمز عبور -->
+                            <div class="mb-4">
+                                <label asp-for="RePassword" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-success">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                    <input asp-for="RePassword" class="form-control border-start-0 ps-0" placeholder="رمز عبور را دوباره وارد کنید">
+                                    <button class="btn btn-outline-secondary border-start-0" type="button" id="toggleRePassword">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="RePassword" class="text-danger small d-block mt-1"></span>
+                            </div>
+
+                            <!-- چک‌باکس پذیرش قوانین -->
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                                <label class="form-check-label" for="agreeTerms">
+                                    <a href="#" class="text-success text-decoration-none">قوانین و مقررات</a> را می‌پذیرم.
+                                </label>
+                            </div>
+
+                            <!-- دکمه ثبت‌نام -->
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-success btn-lg rounded-3 py-3 fw-bold shadow-sm">
+                                    <i class="fas fa-user-plus me-2"></i> ثبت‌نام
+                                </button>
+                            </div>
+
+                            <!-- لینک ورود -->
+                            <p class="text-center mb-0">
+                                قبلاً ثبت‌نام کرده‌اید؟
+                                <a href="/login" class="text-success fw-bold text-decoration-none">وارد شوید</a>
+                            </p>
+                        </form>
+                    </div>
+
+                    <!-- فوتر با دکمه‌های اجتماعی -->
+                    <div class="card-footer bg-light text-center py-3 border-0">
+                        <span class="small text-muted">یا عضویت با</span>
+                        <div class="d-flex justify-content-center gap-2 mt-2">
+                            <a href="#" class="btn btn-outline-danger btn-sm rounded-3 px-3"><i class="fab fa-google"></i></a>
+                            <a href="#" class="btn btn-outline-primary btn-sm rounded-3 px-3"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="btn btn-outline-dark btn-sm rounded-3 px-3"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Register Section -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // توجه: idها توسط asp-for دقیقاً با حروف بزرگ اول تولید می‌شوند
+        var togglePassword = document.getElementById('togglePassword');
+        var toggleRePassword = document.getElementById('toggleRePassword');
+        var passwordInput = document.getElementById('Password');      // حروف بزرگ
+        var repasswordInput = document.getElementById('RePassword');  // حروف بزرگ
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function() {
+                var icon = this.querySelector('i');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+            });
+        }
+
+        if (toggleRePassword && repasswordInput) {
+            toggleRePassword.addEventListener('click', function() {
+                var icon = this.querySelector('i');
+                if (repasswordInput.type === 'password') {
+                    repasswordInput.type = 'text';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                } else {
+                    repasswordInput.type = 'password';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+            });
+        }
+    </script>
+}

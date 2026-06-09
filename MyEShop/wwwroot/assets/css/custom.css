@@ -1,0 +1,45 @@
+/* ==========================================
+   استایل حرفه‌ای دراپ‌داون - نسخه قوی
+   ========================================== */
+.navbar .dropdown-menu {
+    border: none !important;
+    border-radius: 0.75rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    border-top: 3px solid #198754 !important;
+    animation: dropdownFadeIn 0.3s ease !important;
+    padding: 0.5rem 0 !important;
+    min-width: 220px !important;
+    background-color: #ffffff !important;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar .dropdown-item {
+    padding: 0.6rem 1.5rem !important;
+    font-weight: 500 !important;
+    color: #333 !important;
+    transition: all 0.2s ease !important;
+    border-left: 3px solid transparent !important;
+}
+
+    .navbar .dropdown-item:hover {
+        background-color: #f8f9fa !important;
+        color: #198754 !important;
+        border-left: 3px solid #198754 !important;
+        padding-left: 1.8rem !important;
+    }
+
+    .navbar .dropdown-item .badge {
+        font-size: 0.75rem !important;
+        padding: 0.35em 0.65em !important;
+    }
