@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Identity.Client.AppConfig;
 
@@ -16,6 +17,8 @@ namespace MyEShop.Models
         [Required]
         public DateTime RegisterDate { get; set; } = new DateTime();
         public bool IsAdmin { get; set; }
+
+        public List<Order> Orders { get; set; }
 
     }
 }

@@ -1,4 +1,4 @@
-﻿@model CartViewModel
+﻿@model Order
 @{
     ViewData["Title"] = "سبد خرید";
 
@@ -8,123 +8,124 @@
 <!-- Start Cart Page Content -->
 
 
-
-<div class="container py-5">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="h2 border-bottom pb-3 mb-5">سبد خرید</h1>
+@if (Model != null)
+{
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="h2 border-bottom pb-3 mb-5">سبد خرید</h1>
+            </div>
         </div>
-    </div>
 
-    <!-- اگر سبد خرید خالی نیست -->
-    <div class="row">
-        <!-- لیست محصولات -->
-        <div class="col-lg-8">
-            <div class="table-responsive">
-                <table class="table align-middle">
-                    <thead class="bg-light">
-                        <tr>
-                            <th scope="col" class="border-0 ps-0" style="min-width: 100px;">محصول</th>
-                            <th scope="col" class="border-0">قیمت</th>
-                            <th scope="col" class="border-0">تعداد</th>
-                            <th scope="col" class="border-0">مجموع</th>
-                            <th scope="col" class="border-0 text-center">حذف</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in Model.CartItems)
-                    {
-                        <!-- آیتم نمونه اول -->
-                        <tr>
-                            <td class="ps-0">
-                                <div class="d-flex align-items-center">
-                                        <img src="@($"/images/{item.Item.Product.Id}.jpg")" alt="@item.Item.Product.Name" class="img-fluid rounded-1 me-3" style="width: 80px; height: 80px; object-fit: cover;">
-                                    <div>
-                                        <a href="#" class="h6 text-decoration-none text-dark">@item.Item.Product.Name</a>
-                                        <div class="mt-2">
-                                            <span class="product-color-dot color-dot-red rounded-circle d-inline-block me-1"></span>
-                                            <span class="product-color-dot color-dot-blue rounded-circle d-inline-block me-1"></span>
-                                            <span class="product-color-dot color-dot-black rounded-circle d-inline-block"></span>
+        <!-- اگر سبد خرید خالی نیست -->
+        <div class="row">
+            <!-- لیست محصولات -->
+            <div class="col-lg-8">
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead class="bg-light">
+                            <tr>
+                                <th scope="col" class="border-0 ps-0" style="min-width: 100px;">محصول</th>
+                                <th scope="col" class="border-0">قیمت</th>
+                                <th scope="col" class="border-0">تعداد</th>
+                                <th scope="col" class="border-0">مجموع</th>
+                                <th scope="col" class="border-0 text-center">حذف</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <!-- آیتم نمونه اول -->
+                                <tr>
+                                    <td class="ps-0">
+                                        <div class="d-flex align-items-center">
+                                            <img src="@($"/images/{item.Product.Id}.jpg")" alt="@item.Product.Name" class="img-fluid rounded-1 me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                            <div>
+                                                <a href="#" class="h6 text-decoration-none text-dark">@item.Product.Name</a>
+                                                <div class="mt-2">
+                                                    <span class="product-color-dot color-dot-red rounded-circle d-inline-block me-1"></span>
+                                                    <span class="product-color-dot color-dot-blue rounded-circle d-inline-block me-1"></span>
+                                                    <span class="product-color-dot color-dot-black rounded-circle d-inline-block"></span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="align-middle"><span class="fw-bold">@item.Item.Price</span></td>
-                            <td class="align-middle">
-                                <div class="input-group input-group-sm" style="max-width: 120px;">
-                                    <button class="btn btn-outline-secondary" type="button"><i class="fas fa-minus"></i></button>
-                                    <input type="text" class="form-control text-center" value="@item.Quantity" readonly>
-                                    <button class="btn btn-outline-secondary" type="button"><i class="fas fa-plus"></i></button>
-                                </div>
-                            </td>
-                            <td class="align-middle fw-bold text-success">@item.GetTotalPrice()</td>
-                            <td class="align-middle text-center">
-                                <a asp-controller="Home" asp-action="RemoveItem" asp-route-itemId="@item.Item.Id" class="btn btn-sm btn-outline-danger rounded-3" title="حذف">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
-                        </tr>
+                                    </td>
+                                    <td class="align-middle"><span class="fw-bold">@item.Price</span></td>
+                                    <td class="align-middle">
+                                        <div class="input-group input-group-sm" style="max-width: 120px;">
+                                            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-minus"></i></button>
+                                            <input type="text" class="form-control text-center" value="@item.Count" readonly>
+                                            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle fw-bold text-success">@Model.OrderDetails.Sum(c=>c.Count*c.Price)</td>
+                                    <td class="align-middle text-center">
+                                        <a asp-controller="Home" asp-action="RemoveItem" asp-route-DatailId="@item.DetailId" class="btn btn-sm btn-outline-danger rounded-3" title="حذف">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
+                                </tr>
 
 
-                    }
+                            }
+
                  
                   
-                  
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
 
-            <!-- دکمه‌های پایین جدول -->
-            <div class="d-flex justify-content-between mt-4">
-                <a asp-controller="Home" asp-action="Index"   class="btn btn-outline-success rounded-3 px-4">
-                    <i class="fas fa-arrow-right me-2"></i>ادامه خرید
-                </a>
-                <button type="button" class="btn btn-outline-secondary rounded-3 px-4">
-                    <i class="fas fa-sync-alt me-2"></i>بروزرسانی سبد
-                </button>
-            </div>
-        </div>
-
-        <!-- خلاصه سبد خرید -->
-        <div class="col-lg-4 mt-5 mt-lg-0">
-            <div class="card border-0 shadow rounded-3">
-                <div class="card-body p-4">
-                    <h2 class="h4 border-bottom pb-3 mb-4">خلاصه سفارش</h2>
-
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>جمع سبد خرید</span>
-                        <span>@Model.OrderTotal</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span>هزینه حمل</span>
-                        <span>۵۰,۰۰۰ تومان</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2 text-danger">
-                        <span>تخفیف</span>
-                        <span>- ۱۰۰,۰۰۰ تومان</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between mb-4 fw-bold h5">
-                        <span>مبلغ قابل پرداخت</span>
-                        <span class="text-success">۱,۱۷۰,۰۰۰ تومان</span>
-                    </div>
-
-                    <!-- کد تخفیف -->
-                    <div class="input-group mb-4">
-                        <input type="text" class="form-control" placeholder="کد تخفیف">
-                        <button class="btn btn-success rounded-3 px-3" type="button">اعمال</button>
-                    </div>
-
-                    <a href="#" class="btn btn-success w-100 py-3 rounded-3 fw-bold">
-                        <i class="fas fa-credit-card me-2"></i>نهایی کردن خرید
+                <!-- دکمه‌های پایین جدول -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-success rounded-3 px-4">
+                        <i class="fas fa-arrow-right me-2"></i>ادامه خرید
                     </a>
+                    <button type="button" class="btn btn-outline-secondary rounded-3 px-4">
+                        <i class="fas fa-sync-alt me-2"></i>بروزرسانی سبد
+                    </button>
+                </div>
+            </div>
+
+            <!-- خلاصه سبد خرید -->
+            <div class="col-lg-4 mt-5 mt-lg-0">
+                <div class="card border-0 shadow rounded-3">
+                    <div class="card-body p-4">
+                        <h2 class="h4 border-bottom pb-3 mb-4">خلاصه سفارش</h2>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>جمع سبد خرید</span>
+                            <span>@Model.OrderDetails.Sum(c => c.Count * c.Price)</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>هزینه حمل</span>
+                            <span>۵۰,۰۰۰ تومان</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2 text-danger">
+                            <span>تخفیف</span>
+                            <span>- ۱۰۰,۰۰۰ تومان</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4 fw-bold h5">
+                            <span>مبلغ قابل پرداخت</span>
+                            <span class="text-success">۱,۱۷۰,۰۰۰ تومان</span>
+                        </div>
+
+                        <!-- کد تخفیف -->
+                        <div class="input-group mb-4">
+                            <input type="text" class="form-control" placeholder="کد تخفیف">
+                            <button class="btn btn-success rounded-3 px-3" type="button">اعمال</button>
+                        </div>
+
+                        <a href="#" class="btn btn-success w-100 py-3 rounded-3 fw-bold">
+                            <i class="fas fa-credit-card me-2"></i>نهایی کردن خرید
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- اگر سبد خرید خالی باشد (این بخش را می‌توانی شرطی نمایش دهی) -->
-    <!--
+        <!-- اگر سبد خرید خالی باشد (این بخش را می‌توانی شرطی نمایش دهی) -->
+        <!--
     <div class="row py-5">
         <div class="col-md-8 m-auto text-center">
             <div class="py-5">
@@ -138,5 +139,7 @@
         </div>
     </div>
     -->
-</div>
+    </div>
+}
+
 <!-- End Cart Page Content -->

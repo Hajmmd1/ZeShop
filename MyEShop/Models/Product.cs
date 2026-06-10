@@ -18,6 +18,7 @@ namespace MyEShop.Models
 
         public ICollection<CategoryToProducts> CategoryToProducts { get; set; }
         public Item Item { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
 
 
     }

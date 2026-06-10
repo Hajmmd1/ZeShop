@@ -33,7 +33,7 @@ namespace MyEShop
 
             services.AddDbContext<MyShopContext>(options =>
             {
-                options.UseSqlServer("Data Source=ROOTIT-C\\SQL2022;Initial Catalog=MyShop_Db;Integrated Security=True;TrustServerCertificate=True;");
+                options.UseSqlServer("Data Source=ROOTIT-C\\SQL2022;Initial Catalog=ZeShop-Db;Integrated Security=True;TrustServerCertificate=True;");
             });
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

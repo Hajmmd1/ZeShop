@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,7 +17,7 @@ namespace MyEShop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private MyShopContext _context;
-        private static Cart _cart=new Cart();
+       
 
         public HomeController(ILogger<HomeController> logger,MyShopContext context) 
         {
@@ -93,45 +95,87 @@ namespace MyEShop.Controllers
             }
          
 
-        }
-
+     }
+        [Authorize]
         public IActionResult AddToCart(int itemId)
         {
             var product = _context.Products.Include(p => p.Item).SingleOrDefault(p => p.ItemId == itemId);
             if (product!=null)
             {
-                var cartitem = new CartItem()
+                int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString());
+                var order = _context.Orders.FirstOrDefault(c => c.UserId == userId&&!c.IsFinaly);
+                if (order!=null)
                 {
-                    Item = product.Item,
-                    Quantity = 1
+                    var orderDetail = _context.OrderDetails.FirstOrDefault(d=>d.OrderId==order.OrderId
+                                                                              &&d.ProductId==product.Id);
+                    if (orderDetail!=null)
+                    {
+                        orderDetail.Count += 1;
+                    }
+                    else
+                    {
+                        _context.OrderDetails.Add(new OrderDetail()
+                        {
+                            OrderId = order.OrderId
+                            ,
+                            ProductId = product.Id
+                            ,
+                            Price = product.Item.Price
+                            ,
+                            Count = 1
 
-                };
-                _cart.AddItem(cartitem);
+                        });
+                    }
+
+                }
+                else
+                {
+                    order=new Order()
+                    {
+                        UserId = order.UserId,
+                        CreationDate = DateTime.Now
+                        ,IsFinaly = order.IsFinaly
+
+                    };
+                    _context.Orders.Add(order);
+                    _context.SaveChanges();
+                    _context.OrderDetails.Add(new OrderDetail()
+                    {
+                        OrderId = order.OrderId
+                        ,ProductId = product.Id
+                        ,Price = product.Item.Price
+                        ,Count = 1
+
+                    });
+                   
 
 
+
+                }
+                _context.SaveChanges();
             }
 
             return RedirectToAction("ShowCartItem");
 
         }
-      
+        [Authorize]
         public IActionResult ShowCartItem()
         {
-            var cartVM = new CartViewModel()
-            {
-                CartItems = _cart.CartItems,
-                OrderTotal = _cart.CartItems.Sum(c=>c.GetTotalPrice())
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString());
 
-            };
-            return View("Cart",cartVM);
+            var order = _context.Orders.Where(c => c.UserId == userId&&!c.IsFinaly)
+                .Include(x => x.OrderDetails)
+                .ThenInclude(f => f.Product).FirstOrDefault();
+            return View("Cart",order);
 
 
         }
 
-        public IActionResult RemoveItem(int itemId)
+        public IActionResult RemoveItem(int DetailId)
         {
-
-            _cart.RemoveItem(itemId);
+            var orderDetail = _context.OrderDetails.Find(DetailId);
+            _context.Remove(orderDetail);
+          
             return RedirectToAction("ShowCartItem");
 
         }
