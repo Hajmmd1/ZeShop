@@ -53,6 +53,9 @@
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">درباره</a></li>
                         <li class="nav-item"><a class="nav-link" @* href="@Url.Action("Shop", "Home")" *@>فروشگاه</a></li>
                         <li class="nav-item"><a class="nav-link" @* href="@Url.Action("Contact", "Home")" *@>تماس</a></li>
+                       
+                       
+                       
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarCategories" role="button" 
                                data-bs-toggle="dropdown" aria-expanded="false">
@@ -62,7 +65,10 @@
                                 @await Component.InvokeAsync("ProductToCategoryComponent", new { viewName = "CategoryMenu" })
                             </ul>
                         </li>
-
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <p>"@User.Identity.Name"</p>
+                        }
                     </ul>
                 </div>
                 <div class="navbar align-self-center d-flex">

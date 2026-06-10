@@ -98,7 +98,7 @@ namespace MyEShop.Controllers
 
             HttpContext.SignInAsync(principal, properties);
 
-            return Redirect($"/Home/Index");
+            return Redirect($"/");
 
         }
 
@@ -108,6 +108,17 @@ namespace MyEShop.Controllers
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect("/Account/Login");
 
+        }
+
+        #endregion
+
+        #region Account
+
+        public IActionResult Account()
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+           
+            return View();
         }
 
         #endregion

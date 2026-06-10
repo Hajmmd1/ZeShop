@@ -96,10 +96,12 @@ namespace MyEShop.Controllers
          
 
      }
+
+
         [Authorize]
-        public IActionResult AddToCart(int itemId)
+        public IActionResult AddToCart(int ProductId)
         {
-            var product = _context.Products.Include(p => p.Item).SingleOrDefault(p => p.ItemId == itemId);
+            var product = _context.Products.Include(p => p.Item).SingleOrDefault(p => p.ItemId ==ProductId );
             if (product!=null)
             {
                 int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString());
@@ -132,9 +134,9 @@ namespace MyEShop.Controllers
                 {
                     order=new Order()
                     {
-                        UserId = order.UserId,
+                        UserId = userId,
                         CreationDate = DateTime.Now
-                        ,IsFinaly = order.IsFinaly
+                        ,IsFinaly = false
 
                     };
                     _context.Orders.Add(order);
@@ -158,7 +160,7 @@ namespace MyEShop.Controllers
             return RedirectToAction("ShowCartItem");
 
         }
-        [Authorize]
+        //[Authorize]
         public IActionResult ShowCartItem()
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString());

@@ -19,6 +19,7 @@ namespace MyEShop.Models
         public bool IsAdmin { get; set; }
 
         public List<Order> Orders { get; set; }
+        public List<Address> Addresses { get; set; }
 
     }
 }
