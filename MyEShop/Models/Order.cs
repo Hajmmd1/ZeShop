@@ -16,7 +16,7 @@ namespace MyEShop.Models
         public bool IsFinaly { get; set; }
 
 
-
+        public Address Address { get; set; }
         public Users Users { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
 
