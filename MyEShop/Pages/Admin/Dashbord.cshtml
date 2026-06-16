@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "داشبورد";
+}
+
+<div class="admin-page-enter">
+    <h2 class="fw-bold mb-4">
+        <i class="fas fa-chart-pie me-2 text-success"></i>نمای کلی
+    </h2>
+
+    <!-- کارت‌های آماری -->
+    <div class="row g-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="glass-card p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted small mb-1">فروش امروز</p>
+                        <h3 class="fw-bold mb-0">۱,۲۵۰,۰۰۰</h3>
+                    </div>
+                    <i class="fas fa-chart-line text-success fs-2 opacity-75"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="glass-card p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted small mb-1">سفارش‌های جدید</p>
+                        <h3 class="fw-bold mb-0">۱۲</h3>
+                    </div>
+                    <i class="fas fa-shopping-bag text-warning fs-2 opacity-75"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="glass-card p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted small mb-1">محصولات</p>
+                        <h3 class="fw-bold mb-0">۴۸</h3>
+                    </div>
+                    <i class="fas fa-box text-info fs-2 opacity-75"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="glass-card p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="text-muted small mb-1">کاربران</p>
+                        <h3 class="fw-bold mb-0">۱۵۶</h3>
+                    </div>
+                    <i class="fas fa-users text-danger fs-2 opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- جدول آخرین سفارش‌ها -->
+    <div class="glass-card mt-4 p-4">
+        <h5 class="fw-bold mb-3">
+            <i class="fas fa-receipt me-2 text-success"></i>آخرین سفارش‌ها
+        </h5>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>شماره</th>
+                        <th>مشتری</th>
+                        <th>تاریخ</th>
+                        <th>مبلغ</th>
+                        <th>وضعیت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>۱۰۲۳</td>
+                        <td>علی محمدی</td>
+                        <td>۱۴۰۳/۰۳/۲۵</td>
+                        <td>۴۵۰,۰۰۰</td>
+                        <td><span class="badge bg-warning text-dark">در انتظار</span></td>
+                    </tr>
+                    <tr>
+                        <td>۱۰۲۲</td>
+                        <td>سارا احمدی</td>
+                        <td>۱۴۰۳/۰۳/۲۴</td>
+                        <td>۱,۲۰۰,۰۰۰</td>
+                        <td><span class="badge bg-success">تحویل شده</span></td>
+                    </tr>
+                    <tr>
+                        <td>۱۰۲۱</td>
+                        <td>رضا کریمی</td>
+                        <td>۱۴۰۳/۰۳/۲۳</td>
+                        <td>۸۹۰,۰۰۰</td>
+                        <td><span class="badge bg-danger">لغو شده</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

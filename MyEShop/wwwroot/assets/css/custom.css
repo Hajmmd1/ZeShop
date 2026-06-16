@@ -43,3 +43,118 @@
         font-size: 0.75rem !important;
         padding: 0.35em 0.65em !important;
     }
+/* ============================
+   Address Drawer Customization
+   ============================ */
+.address-drawer {
+    width: 450px !important;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+@media (max-width: 576px) {
+    .address-drawer {
+        width: 100% !important;
+        border-radius: 0;
+    }
+}
+
+.offcanvas-backdrop {
+    transition: opacity 0.35s ease !important;
+}
+
+/* کارت آدرس */
+.address-card {
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1px solid #e9ecef;
+}
+
+    .address-card:hover {
+        border-color: #198754;
+        background-color: #f8f9fa;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+        transform: translateY(-2px);
+    }
+
+    .address-card.selected {
+        border: 2px solid #198754;
+        background-color: #f0faf4;
+    }
+
+        .address-card.selected .selected-icon {
+            display: block !important;
+        }
+
+    /* انیمیشن حذف */
+    .address-card.removing {
+        opacity: 0;
+        transform: scale(0.95);
+        transition: all 0.3s ease;
+    }
+
+/* افکت فوکوس فیلدها */
+#addressForm .form-control:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+/* اسپینر */
+#addressDrawerContent .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* انیمیشن تیک سبز */
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+/* Drawer مستقل */
+#addressDrawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1050;
+    height: 100%;
+    width: 450px;
+    background-color: #fff;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow-y: auto;
+}
+
+@media (max-width: 576px) {
+    #addressDrawer {
+        width: 100%;
+    }
+}
+#addressDrawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1050;
+    height: 100%;
+    width: 450px;
+    background-color: #fff;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.15);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow-y: auto;
+}
+
+@media (max-width: 576px) {
+    #addressDrawer {
+        width: 100%;
+    }
+}

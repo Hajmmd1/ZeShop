@@ -55,4 +55,47 @@ namespace MyEShop.Models
 
 
     }
+
+
+
+    public class AddAddressViewModel
+    {
+        [Required]
+        [MaxLength(15)]
+        public  string Province { get; set; }
+        [Required]
+        [MaxLength(15)]
+        public string City { get; set; }
+        [Required]
+        [MaxLength(15)]
+        public string PostalCode { get; set; }
+        [Required]
+        [Phone]
+        public string Phone { get; set; }
+        [Required]
+        [MaxLength(500)]
+        public string FullAddress { get; set; }
+
+    }
+
+    public class EditAddressViewModel
+    {
+        [Required]
+        [MaxLength(15)]
+        public string Province { get; set; }
+        [Required]
+        [MaxLength(15)]
+        public string City { get; set; }
+        [Required]
+        [MaxLength(15)]
+        public string PostalCode { get; set; }
+        [Required]
+        [Phone]
+        public string Phone { get; set; }
+        [Required]
+        [MaxLength(500)]
+        public string FullAddress { get; set; }
+
+    }
+
 }

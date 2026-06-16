@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تأیید نهایی سفارش - فروشگاه زی</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <style>
+            /* انیمیشن ورود کلی */
+            .confirmation-container {
+                animation: fadeInUp 0.8s ease both;
+            }
+            @@keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* تیک دایره‌ای */
+            .checkmark-wrapper {
+                position: relative;
+                display: inline-block;
+            }
+
+            .checkmark-circle {
+                animation: scaleIn 0.5s ease-out both;
+            }
+
+            .checkmark-path {
+                stroke-dasharray: 100;
+                stroke-dashoffset: 100;
+                animation: drawCheck 0.8s ease forwards 0.3s;
+            }
+            /* پالس اطراف تیک */
+            .pulse-ring {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 100px;
+                height: 100px;
+                margin-top: -50px;
+                margin-left: -50px;
+                border-radius: 50%;
+                background: rgba(25,135,84,0.1);
+                animation: pulse 2s ease infinite 1s;
+                pointer-events: none;
+            }
+            @@keyframes scaleIn {
+                0% {
+                    transform: scale(0);
+                    opacity: 0;
+                }
+
+                80% {
+                    transform: scale(1.15);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: scale(1);
+                }
+            }
+            @@keyframes drawCheck {
+                to {
+                    stroke-dashoffset: 0;
+                }
+            }
+            @@keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    opacity: 0.6;
+                }
+
+                100% {
+                    transform: scale(1.8);
+                    opacity: 0;
+                }
+            }
+
+            /* کارت‌ها با ورود پلکانی */
+            .order-details-card {
+                opacity: 0;
+                animation: cardSlideUp 0.6s ease forwards;
+                transition: all 0.3s ease;
+            }
+
+                .order-details-card:nth-child(1) {
+                    animation-delay: 0.6s;
+                }
+
+                .order-details-card:nth-child(2) {
+                    animation-delay: 0.9s;
+                }
+
+                .order-details-card:hover {
+                    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+                    transform: translateY(-3px);
+                }
+            @@keyframes cardSlideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* دکمه نهایی */
+            .btn-finalize {
+                opacity: 0;
+                animation: fadeInBtn 0.6s ease forwards 1.2s;
+                transition: all 0.3s ease;
+            }
+            @@keyframes fadeInBtn {
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .btn-finalize:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 25px rgba(25,135,84,0.5);
+                background: linear-gradient(45deg, #198754, #28a745);
+            }
+    </style>
+</head>
+<body>
+
+    <main class="container py-5 text-center confirmation-container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <!-- تیک متحرک -->
+                <div class="mb-4 checkmark-wrapper">
+                    <div class="pulse-ring"></div>
+                    <svg width="100" height="100" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" class="checkmark-circle">
+                        <circle cx="26" cy="26" r="24" fill="#198754" />
+                        <path class="checkmark-path" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M14 27 l7 7 l16-16" />
+                    </svg>
+                </div>
+
+                <h2 class="fw-bold mb-2">آمادهٔ پرداخت</h2>
+                <p class="text-muted mb-4">لطفاً اطلاعات زیر را بررسی و سفارش خود را نهایی کنید.</p>
+
+                <!-- کارت آدرس (ایستا) -->
+                <div class="card border-0 shadow-sm rounded-3 mb-3 text-start order-details-card">
+                    <div class="card-body">
+                        <h5 class="fw-bold">
+                            <i class="fas fa-map-marker-alt text-success me-2"></i>آدرس ارسال
+                        </h5>
+                        <p class="mb-1">تهران، تهران</p>
+                        <p class="mb-1 text-muted small">خیابان ولیعصر، بالاتر از میدان ونک، کوچه هفتم، پلاک ۱۲</p>
+                        <p class="mb-0 text-muted small">
+                            کد پستی: ۱۹۶۸۶۳۳۷۱۴ | تلفن: ۰۹۱۲۳۴۵۶۷۸۹
+                        </p>
+                    </div>
+                </div>
+
+                <!-- کارت محصولات (ایستا) -->
+                <div class="card border-0 shadow-sm rounded-3 mb-3 text-start order-details-card">
+                    <div class="card-body">
+                        <h5 class="fw-bold">
+                            <i class="fas fa-shopping-bag text-success me-2"></i>محصولات
+                        </h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2 d-flex justify-content-between">
+                                <span>کفش ورزشی مردانه (۲ عدد)</span>
+                                <span class="fw-bold">۹۰۰,۰۰۰ تومان</span>
+                            </li>
+                            <li class="mb-2 d-flex justify-content-between">
+                                <span>تی‌شرت لاکچری زنانه (۱ عدد)</span>
+                                <span class="fw-bold">۳۲۰,۰۰۰ تومان</span>
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="d-flex justify-content-between fw-bold fs-5">
+                            <span>مبلغ قابل پرداخت</span>
+                            <span class="text-success">۱,۲۲۰,۰۰۰ تومان</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- دکمه پرداخت -->
+                <button class="btn btn-success w-100 py-3 rounded-3 fw-bold btn-finalize">
+                    <i class="fas fa-credit-card me-2"></i>پرداخت و نهایی کردن
+                </button>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

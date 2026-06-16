@@ -8,8 +8,10 @@ namespace MyEShop.Models
     {
         [Key]
         public int OrderId { get; set; }
-        [Required]
+       
         public int  UserId { get; set; }
+
+        public int? AddressId { get; set; }
         [Required]
         public DateTime CreationDate { get; set; }
         [Required]

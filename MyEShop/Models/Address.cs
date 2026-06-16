@@ -18,11 +18,15 @@ namespace MyEShop.Models
         [MaxLength(15)]
         public string PostalCode { get; set; }
         [Required]
-        [MaxLength(15)]
+        [Phone]
         public string Phone { get; set; }
         [Required]
         [MaxLength(500)]
         public string FullAddress { get; set; }
+
+        [Required]
+        [MaxLength(15)]
+        public string Province { get; set; }
 
 
 

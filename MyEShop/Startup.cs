@@ -28,15 +28,17 @@ namespace MyEShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             #region db context
 
             services.AddDbContext<MyShopContext>(options =>
             {
-                options.UseSqlServer("Data Source=ROOTIT-C\\SQL2022;Initial Catalog=ZeShop-Db;Integrated Security=True;TrustServerCertificate=True;");
+                options.UseSqlServer("Data Source=ROOTIT-C\\SQL2022;Initial Catalog=MyZeShop-Db;Integrated Security=True;TrustServerCertificate=True;");
             });
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
 
            
 
@@ -76,6 +78,7 @@ namespace MyEShop
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -7,6 +7,7 @@ namespace MyEShop.Data.Repository
     {
         bool IsExsistUserByUserName(string userName);
         Users GetUsersForLogin(string userName,string password);
+        public Users GetUsrById(int usrId);
         void AdUser(Users users);
 
     }
@@ -34,6 +35,11 @@ namespace MyEShop.Data.Repository
         {
             _context.Add(users);
             _context.SaveChanges();
+        }
+
+        public Users GetUsrById(int usrId)
+        {
+            return _context.User.FirstOrDefault(c => c.UserId == usrId);
         }
     }
 

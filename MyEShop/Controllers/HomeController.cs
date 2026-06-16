@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyEShop.Data;
+using MyEShop.Data.Repository;
 using MyEShop.Models;
 
 namespace MyEShop.Controllers
@@ -16,12 +17,14 @@ namespace MyEShop.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IAccountRepository _accountRepository;
         private MyShopContext _context;
        
 
-        public HomeController(ILogger<HomeController> logger,MyShopContext context) 
+        public HomeController(ILogger<HomeController> logger,MyShopContext context, IAccountRepository accountRepository) 
         {
             _context = context;
+            _accountRepository = accountRepository;
             _logger = logger;
         }
 
@@ -194,6 +197,26 @@ namespace MyEShop.Controllers
         }
         [Route("AboutUs")]
         public IActionResult About()
+        {
+            return View();
+        }
+        // این متد در HomeController می‌ماند
+        [Authorize]
+        public IActionResult SelectAddress(int addressId)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString());
+            var order = _context.Orders.FirstOrDefault(c => c.UserId == userId && !c.IsFinaly);
+            if (order != null)
+            {
+                _accountRepository.SetOrderAddress(order.OrderId, addressId);
+                // هدایت به مرحلهٔ بعد (مثلاً تأیید نهایی سفارش)
+                return RedirectToAction("OrderConfirmation");
+            }
+            TempData["ErrorMessage"] = "سفارش فعالی یافت نشد.";
+            return RedirectToAction("ShowCartItem");
+        }
+
+        public IActionResult OrderConfirmation()
         {
             return View();
         }

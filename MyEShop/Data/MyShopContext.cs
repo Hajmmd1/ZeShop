@@ -20,6 +20,7 @@ namespace MyEShop.Data
         public DbSet<Users> User { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
        
 
