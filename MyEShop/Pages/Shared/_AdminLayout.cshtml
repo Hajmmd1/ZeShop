@@ -1,6 +1,4 @@
-﻿@{
-    Layout = null;
-}
+﻿
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -8,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - پنل مدیریت</title>
 
-    <!-- استایل‌های اصلی -->
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="~/assets/css/fonts.css" />   <!-- ← اضافه شد (فونت اصلی) -->
+    <!-- استایل اختصاصی ادمین (بعد از فونت‌ها) -->
     <link rel="stylesheet" href="~/assets/css/admin.css" />
 
     @await RenderSectionAsync("Styles", required: false)

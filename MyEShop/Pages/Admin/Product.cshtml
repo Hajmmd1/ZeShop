@@ -1,0 +1,163 @@
+﻿@page
+@model MyEShop.Pages.Admin.ProductModel
+@{
+    ViewData["Title"] = "مدیریت محصولات";
+}
+
+<div class="admin-page-enter">
+    <div class="products-toolbar mb-4">
+        <h2 class="fw-bold mb-0">
+            <i class="fas fa-box-open me-2 text-success"></i>مدیریت محصولات
+        </h2>
+        <button class="btn btn-success rounded-3 px-4" id="openAddModal">
+            <i class="fas fa-plus me-2"></i>افزودن محصول جدید
+        </button>
+    </div>
+
+    <div class="products-table">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>تصویر</th>
+                        <th>نام محصول</th>
+                        <th>دسته‌بندی‌ها</th>
+                        <th>قیمت</th>
+                        <th>موجودی</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model.Products)
+                    {
+                        <tr>
+                            <td>
+                                <img src="/images/@(product.Id).jpg" alt="@product.Name" class="product-img-thumb"
+                                     onerror="this.onerror=null;this.src='/images/no-image.png';" />
+                            </td>
+                            <td class="fw-bold">@product.Name</td>
+                            <td>
+                                @if (product.CategoryToProducts != null && product.CategoryToProducts.Any())
+                                {
+                                    foreach (var cp in product.CategoryToProducts)
+                                    {
+                                        <span class="badge bg-success rounded-pill me-1 mb-1">@cp.Category?.Name</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="text-muted small">—</span>
+                                }
+                            </td>
+                            <td>@(product.Item?.Price.ToString("N0") ?? "—") تومان</td>
+                            <td>@(product.Item?.QuantityInStock.ToString() ?? "—")</td>
+                            <td>
+                                <a href="/Admin/Product?id=@product.Id" class="btn btn-outline-secondary btn-sm rounded-3 me-1" title="ویرایش">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <input type="hidden" name="id" value="@product.Id" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-3"
+                                            onclick="return confirm('آیا از حذف این محصول مطمئن هستید؟')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- مودال افزودن/ویرایش -->
+<div class="glass-modal-overlay" id="productModal" style="display: none;">
+    <div class="glass-modal">
+        <div class="glass-modal-header">
+            <h5 class="fw-bold mb-0" id="modalTitle">افزودن محصول جدید</h5>
+            <button type="button" class="btn-close" id="modalCloseBtn"></button>
+        </div>
+        <div class="glass-modal-body">
+            <form method="post" id="productForm" enctype="multipart/form-data">
+                <input type="hidden" asp-for="AddOrEditProduct.Id" />
+
+                <div class="mb-3">
+                    <label asp-for="AddOrEditProduct.Name" class="form-label fw-bold">نام محصول</label>
+                    <input asp-for="AddOrEditProduct.Name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">دسته‌بندی‌ها</label>
+                    <div id="selectedCategoriesContainer" class="d-flex flex-wrap gap-1 mb-2">
+                        @if (Model.SelectCategoryId != null)
+                        {
+                            foreach (var catId in Model.SelectCategoryId)
+                            {
+                                var catName = Model.Categories?.FirstOrDefault(c => c.Id == catId)?.Name;
+                                if (catName != null)
+                                {
+                                    <span class="badge bg-success rounded-pill me-1 mb-1">@catName</span>
+                                }
+                            }
+                        }
+                    </div>
+                    <button type="button" class="btn btn-outline-success btn-sm rounded-3" id="toggleCategoryList">
+                        <i class="fas fa-list me-1"></i> انتخاب دسته‌بندی
+                    </button>
+                    <div id="categoryCheckboxList" class="border rounded-3 p-2 mt-2" style="display: none; max-height: 200px; overflow-y: auto;">
+                        @if (Model.Categories != null)
+                        {
+                            @foreach (var cat in Model.Categories)
+                            {
+                                bool isChecked = Model.SelectCategoryId?.Contains(cat.Id) == true;
+                                <div class="form-check">
+                                    <input class="form-check-input category-checkbox" type="checkbox"
+                                           name="SelectCategoryId" value="@cat.Id" id="cat_@cat.Id" @(isChecked ? "checked" : "")>
+                                    <label class="form-check-label" for="cat_@cat.Id">@cat.Name</label>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="AddOrEditProduct.Price" class="form-label fw-bold">قیمت (تومان)</label>
+                        <input asp-for="AddOrEditProduct.Price" type="number" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="AddOrEditProduct.QuantityInStock" class="form-label fw-bold">موجودی</label>
+                        <input asp-for="AddOrEditProduct.QuantityInStock" type="number" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="AddOrEditProduct.Description" class="form-label fw-bold">توضیحات</label>
+                    <textarea asp-for="AddOrEditProduct.Description" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">تصویر محصول</label>
+                    <div class="custom-file-upload-wrapper">
+                        <label for="productPicture" class="btn btn-outline-success rounded-3 px-4 py-2 mb-2">
+                            <i class="fas fa-cloud-upload-alt me-2"></i>انتخاب تصویر
+                        </label>
+                        <input asp-for="AddOrEditProduct.Picture" type="file" id="productPicture" accept="image/*" style="display: none;">
+                        <span id="fileName" class="text-muted small d-block mt-1">هیچ فایلی انتخاب نشده</span>
+                    </div>
+                    <div id="imagePreviewContainer" style="display: none; margin-top: 0.5rem;">
+                        <img id="imagePreview" src="#" alt="پیش‌نمایش" style="max-width: 200px; max-height: 200px; border-radius: 12px; border: 2px solid rgba(0,0,0,0.1);">
+                    </div>
+                </div>
+
+                <div class="glass-modal-footer">
+                    <button type="button" class="btn btn-outline-secondary rounded-3 px-4" id="modalCancelBtn">انصراف</button>
+                    <button type="submit" class="btn btn-success rounded-3 px-4">
+                        <i class="fas fa-save me-2"></i>ذخیره
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
